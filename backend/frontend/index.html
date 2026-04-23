@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Fixer</title>
+</head>
+<body>
+    <h2>Code Fixer 🔧</h2>
+
+    <select id="language">
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+    </select>
+
+    <br><br>
+
+    <textarea id="code" rows="10" cols="50" placeholder="Write your code here..."></textarea>
+
+    <br><br>
+
+    <button onclick="sendCode()">Analyze</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function sendCode() {
+            const code = document.getElementById("code").value;
+            const language = document.getElementById("language").value;
+
+            const response = await fetch("https://your-backend-url/analyze", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    language: language,
+                    code: code
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
